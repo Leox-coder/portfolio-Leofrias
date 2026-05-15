@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leonardo Frías — Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0a0f1e;
+  --navy2:#0e1528;
+  --navy3:#151d35;
+  --slate:#1e2a4a;
+  --accent:#3d7fff;
+  --accent2:#00c896;
+  --text:#f0f4ff;
+  --muted:#8896b3;
+  --border:rgba(61,127,255,0.15);
+  --card:rgba(21,29,53,0.8);
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,15,30,0.85);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.02em;color:var(--text)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;padding:0.5rem 1.25rem;border-radius:6px;font-size:0.875rem;font-weight:500;text-decoration:none;transition:opacity .2s}
+.nav-cta:hover{opacity:0.85}
+
+#hero{min-height:100vh;display:flex;align-items:center;padding:8rem 2rem 4rem;max-width:1200px;margin:0 auto;gap:4rem}
+.hero-content{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(61,127,255,0.1);border:1px solid rgba(61,127,255,0.3);border-radius:100px;padding:0.35rem 1rem;font-size:0.8rem;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem}
+h1 .line2{color:var(--accent)}
+.hero-desc{color:var(--muted);font-size:1.1rem;max-width:520px;margin-bottom:2rem;font-weight:300;line-height:1.7}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-weight:500;font-size:0.95rem;transition:transform .2s,opacity .2s}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--text);padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-weight:400;font-size:0.95rem;border:1px solid var(--border);transition:border-color .2s}
+.btn-secondary:hover{border-color:rgba(61,127,255,0.5)}
+.btn-wa{background:#25D366;color:#fff;padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-weight:500;font-size:0.95rem;display:inline-flex;align-items:center;gap:0.5rem;transition:opacity .2s}
+.btn-wa:hover{opacity:0.88}
+.btn-wa svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
+.hero-photo{flex-shrink:0;position:relative}
+.hero-photo img{width:280px;height:340px;object-fit:cover;object-position:center top;border-radius:16px;display:block}
+.photo-ring{position:absolute;inset:-8px;border-radius:22px;border:1px solid rgba(61,127,255,0.3);pointer-events:none}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem}
+.stat-item .num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text)}
+.stat-item .lbl{font-size:0.8rem;color:var(--muted);margin-top:2px}
+
+.section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:3rem}
+.section-label{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:0.75rem}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;letter-spacing:-0.02em;line-height:1.15}
+.section-title span{color:var(--muted);font-weight:400}
+.divider{width:100%;height:1px;background:var(--border)}
+
+.profile-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:3rem;max-width:480px}
+.ptab{flex:1;padding:0.75rem 1.5rem;text-align:center;font-size:0.9rem;cursor:pointer;transition:background .2s,color .2s;color:var(--muted);background:transparent;border:none;font-family:'DM Sans',sans-serif;font-weight:400}
+.ptab.active{background:var(--accent);color:#fff;font-weight:500}
+.profile-panel{display:none}
+.profile-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+/* CARD BASE */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;backdrop-filter:blur(10px);transition:border-color .25s,transform .25s}
+.card:hover{border-color:rgba(61,127,255,0.4);transform:translateY(-2px)}
+
+/* CLICKABLE PROJECT CARD */
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;backdrop-filter:blur(10px);transition:border-color .25s,transform .25s;cursor:pointer;text-decoration:none;color:var(--text);display:block}
+.pcard:hover{border-color:rgba(61,127,255,0.5);transform:translateY(-3px)}
+.pcard:hover .pcard-arrow{opacity:1;transform:translate(2px,-2px)}
+.pcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem}
+.pcard-arrow{opacity:0.3;transition:opacity .2s,transform .2s}
+.pcard-arrow svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.pcard h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:0.5rem;letter-spacing:-0.01em}
+.pcard p{font-size:0.875rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.tech-stack{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem}
+.tech{font-size:0.72rem;padding:0.2rem 0.55rem;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.07)}
+
+/* API CARD */
+.api-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;backdrop-filter:blur(10px);transition:border-color .25s,transform .25s;cursor:pointer;text-decoration:none;color:var(--text);display:block}
+.api-card:hover{transform:translateY(-3px)}
+.api-card.green{border-color:rgba(0,200,150,0.2)}
+.api-card.green:hover{border-color:rgba(0,200,150,0.5)}
+.api-card.blue{border-color:rgba(61,127,255,0.2)}
+.api-card.blue:hover{border-color:rgba(61,127,255,0.5)}
+.api-card:hover .pcard-arrow{opacity:1;transform:translate(2px,-2px)}
+
+.card-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.25rem}
+.icon-web{background:rgba(61,127,255,0.15)}
+.icon-api{background:rgba(0,200,150,0.15)}
+.card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;margin-bottom:0.5rem;letter-spacing:-0.01em}
+.card p{font-size:0.875rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+
+.endpoint-row{display:flex;flex-wrap:wrap;gap:0.4rem;margin:1rem 0}
+.ep{font-size:0.75rem;padding:0.2rem 0.5rem;border-radius:4px;font-family:monospace}
+.ep-green{background:rgba(0,200,150,0.1);color:var(--accent2)}
+.ep-blue{background:rgba(61,127,255,0.1);color:var(--accent)}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center}
+.skill-card .emoji{font-size:1.5rem;margin-bottom:0.5rem}
+.skill-card .name{font-size:0.85rem;font-weight:500;margin-bottom:0.25rem}
+.skill-card .level{font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.contact-text h2{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;margin-bottom:1rem;letter-spacing:-0.02em}
+.contact-text p{color:var(--muted);margin-bottom:1.5rem;font-weight:300}
+.contact-links{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem}
+.contact-item{display:flex;align-items:center;gap:0.75rem;color:var(--muted);font-size:0.9rem;text-decoration:none;transition:color .2s}
+.contact-item:hover{color:var(--text)}
+.contact-item svg{width:18px;height:18px;flex-shrink:0;color:var(--accent)}
+.wa-btn{display:inline-flex;align-items:center;gap:0.6rem;background:#25D366;color:#fff;padding:0.65rem 1.25rem;border-radius:8px;font-size:0.9rem;font-weight:500;text-decoration:none;transition:opacity .2s}
+.wa-btn:hover{opacity:0.85}
+.wa-btn svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
+
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.form-group input,.form-group textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(61,127,255,0.5)}
+.form-group textarea{min-height:120px;resize:vertical}
+.submit-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:0.85rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;transition:opacity .2s}
+.submit-btn:hover{opacity:0.85}
+
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:0.85rem}
+footer span{color:var(--accent)}
+
+.bg-glow{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(80px);opacity:0.12}
+.glow1{width:600px;height:600px;background:var(--accent);top:-200px;right:-100px}
+.glow2{width:400px;height:400px;background:var(--accent2);bottom:20%;left:-100px}
+.wrapper{position:relative;z-index:1}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  #hero{flex-direction:column-reverse;text-align:center;padding-top:6rem}
+  .hero-photo img{width:200px;height:240px}
+  .hero-actions{justify-content:center}
+  .hero-stats{justify-content:center}
+  .profile-panel.active{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+
+<nav>
+  <div class="nav-logo">Leo<span>.</span>dev</div>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#apis">APIs</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.link/42axx2" target="_blank" class="nav-cta">Contactar</a>
+</nav>
+
+<div class="wrapper">
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Disponible para proyectos</div>
+    <h1>Hola, soy<br><span class="line2">Leonardo Frías</span></h1>
+    <p class="hero-desc">Desarrollador web y backend especializado en crear sitios profesionales para negocios y APIs robustas con Java Spring Boot. Construyo soluciones que funcionan.</p>
+    <div class="hero-actions">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="https://wa.link/42axx2" target="_blank" class="btn-wa">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#contacto" class="btn-secondary">Mensaje</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="num">50+</div><div class="lbl">Proyectos web</div></div>
+      <div class="stat-item"><div class="num">20+</div><div class="lbl">APIs desarolladas</div></div>
+      <div class="stat-item"><div class="num">60+</div><div class="lbl">Clientes satisfechos</div></div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="profesional.png" alt="Leonardo Frías" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div style="display:none;width:280px;height:340px;border-radius:16px;background:var(--slate);align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;color:var(--accent)">LF</div>
+    <div class="photo-ring"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="sobre-mi">
+  <div class="section-header reveal">
+    <div class="section-label">Sobre mí</div>
+    <h2 class="section-title">Dos perfiles, <span>una sola dedicación</span></h2>
+  </div>
+  <div class="reveal">
+    <div class="profile-tabs">
+      <button class="ptab active" onclick="switchTab(this,'web')">🌐 Desarrollo Web</button>
+      <button class="ptab" onclick="switchTab(this,'backend')">⚙️ Backend / APIs</button>
+    </div>
+  </div>
+  <div id="panel-web" class="profile-panel active reveal">
+    <div class="card"><div class="card-icon icon-web">🌐</div><h3>Sitios web para negocios</h3><p>Diseño y desarrollo sitios web profesionales para restaurantes, spas, eventos, e-commerce y más. Responsive, rápidos y listos para atraer clientes.</p><div class="tech-stack"><span class="tech">HTML5</span><span class="tech">CSS3</span><span class="tech">JavaScript</span><span class="tech">Bootstrap</span><span class="tech">SCSS</span></div></div>
+    <div class="card"><div class="card-icon icon-web">🛒</div><h3>E-commerce a medida</h3><p>Tiendas online listas para vender en Tiendanube y Empretienda. Configuración completa: productos, pagos, envíos y personalización de marca.</p><div class="tech-stack"><span class="tech">Tiendanube</span><span class="tech">Empretienda</span><span class="tech">SEO</span></div></div>
+    <div class="card"><div class="card-icon icon-web">📐</div><h3>Diseño pensado para convertir</h3><p>Cada proyecto está pensado desde la experiencia del usuario. Estructura clara, navegación intuitiva y presentación que genera confianza.</p></div>
+    <div class="card"><div class="card-icon icon-web">🔧</div><h3>Soporte y mantenimiento</h3><p>Acompañamiento post-entrega, actualizaciones, ajustes y soporte técnico para que tu sitio siempre esté en óptimas condiciones.</p></div>
+  </div>
+  <div id="panel-backend" class="profile-panel reveal">
+    <div class="card"><div class="card-icon icon-api">⚙️</div><h3>APIs REST con Spring Boot</h3><p>Desarrollo de APIs RESTful robustas con Java 17 y Spring Boot 3. Arquitectura limpia, buenas prácticas y documentación Swagger incluida.</p><div class="tech-stack"><span class="tech">Java 17</span><span class="tech">Spring Boot 3</span><span class="tech">JPA/Hibernate</span></div></div>
+    <div class="card"><div class="card-icon icon-api">🔐</div><h3>Seguridad y autenticación</h3><p>Implementación de JWT, OAuth2 y Spring Security. Autenticación y autorización personalizadas, protección de endpoints y manejo seguro de sesiones.</p><div class="tech-stack"><span class="tech">JWT</span><span class="tech">OAuth2</span><span class="tech">Spring Security</span></div></div>
+    <div class="card"><div class="card-icon icon-api">🗄️</div><h3>Base de datos y persistencia</h3><p>Diseño de base de datos relacional con MySQL. ORM con Hibernate, optimización de queries y gestión de migraciones.</p><div class="tech-stack"><span class="tech">MySQL</span><span class="tech">JPA</span><span class="tech">Hibernate</span></div></div>
+    <div class="card"><div class="card-icon icon-api">📊</div><h3>Observabilidad y DevOps</h3><p>Monitoreo con Grafana Stack (Loki, Prometheus). Contenedorización con Docker y pipelines CI/CD con GitHub Actions.</p><div class="tech-stack"><span class="tech">Docker</span><span class="tech">Grafana</span><span class="tech">Prometheus</span><span class="tech">GitHub Actions</span></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="proyectos">
+  <div class="section-header reveal">
+    <div class="section-label">Proyectos Web</div>
+    <h2 class="section-title">Sitios desarrollados <span>para clientes y como referencia</span></h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
+
+    <a href="https://airesdecasa2.mitiendanube.com/" target="_blank" class="pcard reveal">
+      <div class="pcard-top"><span style="font-size:1.5rem">🏠</span><div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div></div>
+      <h3>Aires de Casa</h3>
+      <p>Tienda online de artículos del hogar. Catálogo de productos, carrito de compras y checkout completo. Plataforma Tiendanube.</p>
+      <div class="tech-stack"><span class="tech">Tiendanube</span><span class="tech">E-commerce</span></div>
+    </a>
+
+    <a href="https://masterobras2.mitiendanube.com/" target="_blank" class="pcard reveal">
+      <div class="pcard-top"><span style="font-size:1.5rem">🏗️</span><div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div></div>
+      <h3>Master Obras</h3>
+      <p>Tienda online para empresa de materiales y servicios de construcción. Catálogo completo con productos organizados por categoría.</p>
+      <div class="tech-stack"><span class="tech">Tiendanube</span><span class="tech">E-commerce</span></div>
+    </a>
+
+    <a href="https://sushiencasa.click/" target="_blank" class="pcard reveal">
+      <div class="pcard-top"><span style="font-size:1.5rem">🍱</span><div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div></div>
+      <h3>Sushi en Casa</h3>
+      <p>Tienda online para delivery de sushi. Menú digital, pedidos online y experiencia mobile-first. Plataforma Empretienda.</p>
+      <div class="tech-stack"><span class="tech">Empretienda</span><span class="tech">Delivery</span><span class="tech">Mobile-first</span></div>
+    </a>
+
+    <a href="https://leox-coder.github.io/web-restaurante/" target="_blank" class="pcard reveal">
+      <div class="pcard-top"><span style="font-size:1.5rem">☕</span><div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div></div>
+      <h3>Web Restaurante / Café</h3>
+      <p>Sitio profesional para cafés y restaurantes. Menú, reservas, sección de contacto y diseño responsive adaptado a cualquier dispositivo.</p>
+      <div class="tech-stack"><span class="tech">HTML5</span><span class="tech">CSS3</span><span class="tech">JavaScript</span><span class="tech">Bootstrap</span></div>
+    </a>
+
+    <a href="https://leox-coder.github.io/web-spa/" target="_blank" class="pcard reveal">
+      <div class="pcard-top"><span style="font-size:1.5rem">🧘</span><div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div></div>
+      <h3>Web SPA / Centro de Bienestar</h3>
+      <p>Sitio moderno para spas y centros de bienestar. Servicios, precios, turnos online, testimonios y páginas de equipo.</p>
+      <div class="tech-stack"><span class="tech">HTML5</span><span class="tech">SCSS</span><span class="tech">JavaScript</span></div>
+    </a>
+
+    <a href="https://leox-coder.github.io/web-wedding/" target="_blank" class="pcard reveal">
+      <div class="pcard-top"><span style="font-size:1.5rem">💍</span><div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div></div>
+      <h3>Web Boda / Eventos</h3>
+      <p>Sitio especial para bodas y eventos. Galería de fotos, historia de la pareja, testimonios y experiencia emotiva responsive.</p>
+      <div class="tech-stack"><span class="tech">SCSS</span><span class="tech">JavaScript</span><span class="tech">HTML5</span></div>
+    </a>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="apis">
+  <div class="section-header reveal">
+    <div class="section-label">Backend / APIs</div>
+    <h2 class="section-title">APIs desarrolladas <span>con Java Spring Boot</span></h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2rem">
+
+    <a href="https://github.com/Leox-coder/Ecommerce-shopCart" target="_blank" class="api-card green reveal">
+      <div class="pcard-top" style="margin-bottom:0.75rem">
+        <div style="display:flex;align-items:center;gap:0.75rem"><div class="card-icon icon-api" style="margin:0;width:36px;height:36px;font-size:1rem">⚙️</div><h3 style="margin:0">E-commerce ShopCart API</h3></div>
+        <div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div>
+      </div>
+      <p style="font-size:0.875rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">Sistema completo de comercio electrónico: usuarios, catálogo de productos con búsqueda y filtrado, carrito de compras y pedidos. Arquitectura hexagonal, JWT + OAuth2, monitoreo con Grafana Stack y pipeline CI/CD.</p>
+      <div style="padding:1rem;background:rgba(0,200,150,0.06);border-radius:8px;border:1px solid rgba(0,200,150,0.15);margin-bottom:1rem">
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em">Endpoints principales</div>
+        <div class="endpoint-row"><span class="ep ep-green">POST /auth/login</span><span class="ep ep-green">GET /products</span><span class="ep ep-green">POST /cart</span><span class="ep ep-green">POST /orders</span></div>
+      </div>
+      <div class="tech-stack"><span class="tech">Java 17</span><span class="tech">Spring Boot 3</span><span class="tech">JWT</span><span class="tech">OAuth2</span><span class="tech">MySQL</span><span class="tech">Docker</span><span class="tech">Swagger</span><span class="tech">Grafana</span><span class="tech">GitHub Actions</span></div>
+    </a>
+
+    <a href="https://github.com/Leox-coder/Estudiante-programacion" target="_blank" class="api-card blue reveal">
+      <div class="pcard-top" style="margin-bottom:0.75rem">
+        <div style="display:flex;align-items:center;gap:0.75rem"><div class="card-icon icon-web" style="margin:0;width:36px;height:36px;font-size:1rem">📚</div><h3 style="margin:0">API Gestión de Estudiantes</h3></div>
+        <div class="pcard-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></div>
+      </div>
+      <p style="font-size:0.875rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">API REST para gestionar registros de estudiantes y materias con operaciones CRUD completas. Demuestra dominio de los fundamentos de arquitectura REST y el ecosistema Spring.</p>
+      <div style="padding:1rem;background:rgba(61,127,255,0.06);border-radius:8px;border:1px solid rgba(61,127,255,0.15);margin-bottom:1rem">
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em">Características</div>
+        <div class="endpoint-row"><span class="ep ep-blue">CRUD completo</span><span class="ep ep-blue">REST architecture</span><span class="ep ep-blue">Persistencia JPA</span></div>
+      </div>
+      <div class="tech-stack"><span class="tech">Java</span><span class="tech">Spring Boot</span><span class="tech">MySQL</span><span class="tech">JPA</span></div>
+    </a>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="skills">
+  <div class="section-header reveal">
+    <div class="section-label">Tecnologías</div>
+    <h2 class="section-title">Stack técnico <span>que domino</span></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card"><div class="emoji">☕</div><div class="name">Java</div><div class="level">Principal</div></div>
+    <div class="skill-card"><div class="emoji">🌿</div><div class="name">Spring Boot</div><div class="level">Principal</div></div>
+    <div class="skill-card"><div class="emoji">🔐</div><div class="name">Spring Security</div><div class="level">Avanzado</div></div>
+    <div class="skill-card"><div class="emoji">🐍</div><div class="name">Python</div><div class="level">Intermedio</div></div>
+    <div class="skill-card"><div class="emoji">🗄️</div><div class="name">MySQL</div><div class="level">Avanzado</div></div>
+    <div class="skill-card"><div class="emoji">🌐</div><div class="name">HTML/CSS/JS</div><div class="level">Avanzado</div></div>
+    <div class="skill-card"><div class="emoji">🐳</div><div class="name">Docker</div><div class="level">Intermedio</div></div>
+    <div class="skill-card"><div class="emoji">📊</div><div class="name">Grafana Stack</div><div class="level">Intermedio</div></div>
+    <div class="skill-card"><div class="emoji">⚙️</div><div class="name">GitHub Actions</div><div class="level">Intermedio</div></div>
+    <div class="skill-card"><div class="emoji">🛒</div><div class="name">Tiendanube</div><div class="level">Avanzado</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="contacto">
+  <div class="contact-grid">
+    <div class="contact-text reveal">
+      <div class="section-label" style="margin-bottom:0.75rem">Contacto</div>
+      <h2>Hablemos de tu<br>próximo proyecto</h2>
+      <p>Estoy disponible para proyectos freelance, colaboraciones y oportunidades laborales. Escribime por el canal que prefieras.</p>
+      <div class="contact-links">
+        <a href="https://github.com/Leox-coder" target="_blank" class="contact-item">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="18" height="18" style="color:var(--accent)"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          github.com/Leox-coder
+        </a>
+      </div>
+      <a href="https://wa.link/42axx2" target="_blank" class="wa-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escribir por WhatsApp
+      </a>
+    </div>
+
+    <div class="contact-form reveal">
+      <form action="https://formspree.io/f/mykorgqn" method="POST" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="fname">Nombre</label>
+          <input type="text" id="fname" name="name" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="femail">Email</label>
+          <input type="email" id="femail" name="email" placeholder="tu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="fmsg">Mensaje</label>
+          <textarea id="fmsg" name="message" placeholder="Contame sobre tu proyecto..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Enviar mensaje</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> <span>Leonardo Frías</span> · Desarrollador Web & Backend · Villa María, Córdoba, Argentina</p>
+</footer>
+
+</div>
+
+<script>
+  
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+function switchTab(btn, tab) {
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.profile-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+function handleSubmit(e) {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Enviando...';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '✓ Mensaje enviado';
+    btn.style.background = 'var(--accent2)';
+    btn.style.opacity = '1';
+  }, 1200);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
